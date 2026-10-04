@@ -30,42 +30,48 @@ window.addEventListener("resize", () => {
   if (window.innerWidth > 900) setMenu(false);
 });
 
+const typedPrefix = document.querySelector("#typed-prefix");
 const typedName = document.querySelector("#typed-name");
-const nameText = "Rusab Chaudhary";
+const headingPrefix = "Hi, I am Muhammad ";
+const headingName = "Rusab Chaudhary";
+const headingText = headingPrefix + headingName;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (reducedMotion) {
-  typedName.textContent = nameText;
+  typedPrefix.textContent = headingPrefix;
+  typedName.textContent = headingName;
 } else {
   let characterIndex = 0;
   let deleting = false;
 
-  function typeName() {
-    typedName.textContent = nameText.slice(0, characterIndex);
+  function animateHeading() {
+    const visibleText = headingText.slice(0, characterIndex);
+    typedPrefix.textContent = visibleText.slice(0, headingPrefix.length);
+    typedName.textContent = visibleText.slice(headingPrefix.length);
 
-    if (!deleting && characterIndex < nameText.length) {
+    if (!deleting && characterIndex < headingText.length) {
       characterIndex += 1;
-      window.setTimeout(typeName, 105);
+      window.setTimeout(animateHeading, 105);
       return;
     }
 
     if (!deleting) {
       deleting = true;
-      window.setTimeout(typeName, 1750);
+      window.setTimeout(animateHeading, 1750);
       return;
     }
 
     if (characterIndex > 0) {
       characterIndex -= 1;
-      window.setTimeout(typeName, 60);
+      window.setTimeout(animateHeading, 60);
       return;
     }
 
     deleting = false;
-    window.setTimeout(typeName, 500);
+    window.setTimeout(animateHeading, 500);
   }
 
-  typeName();
+  animateHeading();
 }
 
 const observedSections = [...document.querySelectorAll("main section[id]")];
