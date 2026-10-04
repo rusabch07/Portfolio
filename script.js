@@ -32,14 +32,23 @@ window.addEventListener("resize", () => {
 
 const typedPrefix = document.querySelector("#typed-prefix");
 const typedName = document.querySelector("#typed-name");
+const typeCursor = document.querySelector(".type-cursor");
+const prefixLine = document.querySelector(".typed-prefix-line");
+const nameLine = document.querySelector(".typed-name-line");
 const headingPrefix = "Hi, I am Muhammad ";
 const headingName = "Rusab Chaudhary";
 const headingText = headingPrefix + headingName;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+function placeTypeCursor(characterIndex) {
+  const activeLine = characterIndex <= headingPrefix.length ? prefixLine : nameLine;
+  activeLine.append(typeCursor);
+}
+
 if (reducedMotion) {
   typedPrefix.textContent = headingPrefix;
   typedName.textContent = headingName;
+  placeTypeCursor(headingText.length);
 } else {
   let characterIndex = 0;
   let deleting = false;
@@ -48,6 +57,7 @@ if (reducedMotion) {
     const visibleText = headingText.slice(0, characterIndex);
     typedPrefix.textContent = visibleText.slice(0, headingPrefix.length);
     typedName.textContent = visibleText.slice(headingPrefix.length);
+    placeTypeCursor(characterIndex);
 
     if (!deleting && characterIndex < headingText.length) {
       characterIndex += 1;
