@@ -380,25 +380,49 @@
 
     <section class="section contact-section" id="contact" aria-labelledby="contact-title">
       <div class="container contact-grid">
-        <div class="contact-copy reveal">
+        <div class="contact-intro reveal">
           <p class="section-kicker">Start a conversation</p>
           <h2 id="contact-title">Let’s Connect</h2>
           <p class="lead">Have a project, internship opportunity or engineering idea to discuss? I’d be glad to hear from you.</p>
-
-          <div class="contact-links" aria-label="Contact profiles">
-            <div class="contact-link unavailable-contact" aria-disabled="true">
-              <span class="contact-icon" aria-hidden="true">in</span><span><strong>LinkedIn</strong><small>Add profile URL</small></span>
-            </div>
-            <div class="contact-link unavailable-contact" aria-disabled="true">
-              <span class="contact-icon" aria-hidden="true">GH</span><span><strong>GitHub</strong><small>Add profile URL</small></span>
-            </div>
-            <div class="contact-link unavailable-contact" aria-disabled="true">
-              <span class="contact-icon" aria-hidden="true">@</span><span><strong>Email</strong><small>Add email address</small></span>
-            </div>
-          </div>
         </div>
 
-        <form class="contact-form reveal" id="contact-form" data-recipient="">
+        <div class="contact-links reveal" aria-label="Contact profiles">
+            <div class="contact-item">
+              <a class="contact-link" href="https://www.linkedin.com/in/muhammad-rusab-chaudhary-494a0038a" target="_blank" rel="noopener noreferrer">
+                <img class="contact-icon-image" src="assets/images/contact-linkedin.png" alt="" aria-hidden="true" width="39" height="39"><span class="contact-link-copy"><strong>LinkedIn</strong><small>www.linkedin.com/in/muhammad-rusab-chaudhary-494a0038a</small></span>
+              </a>
+              <button class="copy-contact" type="button" data-copy-value="https://www.linkedin.com/in/muhammad-rusab-chaudhary-494a0038a" data-copy-label="LinkedIn URL" aria-label="Copy LinkedIn URL" title="Copy LinkedIn URL">
+                <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg><svg class="copy-success" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
+              </button>
+            </div>
+            <div class="contact-item">
+              <a class="contact-link" href="https://github.com/rusabch07" target="_blank" rel="noopener noreferrer">
+                <img class="contact-icon-image" src="assets/images/contact-github.png" alt="" aria-hidden="true" width="39" height="39"><span class="contact-link-copy"><strong>GitHub</strong><small>github.com/rusabch07</small></span>
+              </a>
+              <button class="copy-contact" type="button" data-copy-value="https://github.com/rusabch07" data-copy-label="GitHub URL" aria-label="Copy GitHub URL" title="Copy GitHub URL">
+                <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg><svg class="copy-success" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
+              </button>
+            </div>
+            <div class="contact-item">
+              <a class="contact-link" href="mailto:m.rusabch07@gmail.com">
+                <img class="contact-icon-image" src="assets/images/contact-email.png" alt="" aria-hidden="true" width="39" height="39"><span class="contact-link-copy"><strong>Email</strong><small>m.rusabch07@gmail.com</small></span>
+              </a>
+              <button class="copy-contact" type="button" data-copy-value="m.rusabch07@gmail.com" data-copy-label="Email address" aria-label="Copy email address" title="Copy email address">
+                <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg><svg class="copy-success" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
+              </button>
+            </div>
+            <div class="contact-item">
+              <a class="contact-link" href="tel:+923324633194">
+                <img class="contact-icon-image" src="assets/images/contact-phone.png" alt="" aria-hidden="true" width="39" height="39"><span class="contact-link-copy"><strong>Phone</strong><small>+92 332 4633194</small></span>
+              </a>
+              <button class="copy-contact" type="button" data-copy-value="+923324633194" data-copy-label="Phone number" aria-label="Copy phone number" title="Copy phone number">
+                <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg><svg class="copy-success" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>
+              </button>
+            </div>
+        </div>
+        <p class="sr-only" id="copy-contact-status" role="status" aria-live="polite"></p>
+
+        <form class="contact-form reveal" id="contact-form" data-recipient="m.rusabch07@gmail.com">
           <div class="form-row">
             <label for="contact-name">Name</label>
             <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Your name" required>

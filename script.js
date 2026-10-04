@@ -133,6 +133,62 @@ document.querySelectorAll(".project-dialog").forEach((dialog) => {
   });
 });
 
+const copyContactStatus = document.querySelector("#copy-contact-status");
+
+async function copyContactValue(value) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(value);
+      return;
+    } catch (error) {
+      const fallback = document.createElement("textarea");
+      fallback.value = value;
+      fallback.setAttribute("readonly", "");
+      fallback.style.position = "fixed";
+      fallback.style.opacity = "0";
+      document.body.append(fallback);
+      fallback.select();
+      const copied = document.execCommand("copy");
+      fallback.remove();
+      if (copied) return;
+      throw error;
+    }
+  }
+
+  const fallback = document.createElement("textarea");
+  fallback.value = value;
+  fallback.setAttribute("readonly", "");
+  fallback.style.position = "fixed";
+  fallback.style.opacity = "0";
+  document.body.append(fallback);
+  fallback.select();
+  const copied = document.execCommand("copy");
+  fallback.remove();
+  if (!copied) throw new Error("Clipboard access is unavailable.");
+}
+
+document.querySelectorAll(".copy-contact").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const label = button.dataset.copyLabel;
+    try {
+      await copyContactValue(button.dataset.copyValue);
+      copyContactStatus.textContent = `${label} copied to clipboard.`;
+      button.classList.add("is-copied");
+      button.setAttribute("aria-label", `${label} copied`);
+      button.title = `${label} copied`;
+      window.setTimeout(() => {
+        button.classList.remove("is-copied");
+        button.setAttribute("aria-label", `Copy ${label}`);
+        button.title = `Copy ${label}`;
+      }, 1600);
+    } catch {
+      copyContactStatus.textContent = `Could not copy ${label}. Please select and copy it manually.`;
+      button.setAttribute("aria-label", `Could not copy ${label}`);
+      button.title = `Could not copy ${label}`;
+    }
+  });
+});
+
 const contactForm = document.querySelector("#contact-form");
 const formStatus = document.querySelector("#form-status");
 
