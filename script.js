@@ -115,6 +115,54 @@ if (reducedMotion) {
   revealItems.forEach((item) => revealObserver.observe(item));
 }
 
+const skillCards = [...document.querySelectorAll("#skills .skill-card")];
+
+function showSkillProgress(card, percent) {
+  card.querySelector(".skill-percentage").textContent = `${percent}%`;
+  card.querySelector(".skill-progress").setAttribute("aria-valuenow", String(percent));
+  card.querySelector(".skill-progress-fill").animate(
+    [{ width: `${percent}%` }],
+    { duration: 0, fill: "forwards" }
+  );
+}
+
+if (reducedMotion) {
+  skillCards.forEach((card) => showSkillProgress(card, Number(card.dataset.percent)));
+} else {
+  const skillsSection = document.querySelector("#skills");
+  const skillsObserver = new IntersectionObserver((entries, observer) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    observer.disconnect();
+
+    skillCards.forEach((card) => {
+      const percent = Number(card.dataset.percent);
+      const percentageText = card.querySelector(".skill-percentage");
+      const progressBar = card.querySelector(".skill-progress");
+      const progressFill = card.querySelector(".skill-progress-fill");
+      const startedAt = performance.now();
+
+      progressFill.animate(
+        [{ width: "0%" }, { width: `${percent}%` }],
+        { duration: 1000, easing: "ease-out", fill: "forwards" }
+      );
+
+      function updatePercentage(now) {
+        const progress = Math.min((now - startedAt) / 1000, 1);
+        const easedProgress = 1 - (1 - progress) ** 3;
+        const currentPercent = progress === 1 ? percent : Math.round(percent * easedProgress);
+        percentageText.textContent = `${currentPercent}%`;
+        progressBar.setAttribute("aria-valuenow", String(currentPercent));
+
+        if (progress < 1) requestAnimationFrame(updatePercentage);
+      }
+
+      requestAnimationFrame(updatePercentage);
+    });
+  }, { threshold: 0.15 });
+
+  skillsObserver.observe(skillsSection);
+}
+
 document.querySelectorAll(".detail-trigger").forEach((trigger) => {
   trigger.addEventListener("click", () => {
     const dialog = document.getElementById(trigger.dataset.dialog);

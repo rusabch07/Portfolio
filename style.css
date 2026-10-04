@@ -183,17 +183,19 @@ img { display: block; max-width: 100%; }
 .education-focus > p { margin: 0 0 12px; color: #d9e2eb; font-size: .82rem; font-weight: 750; text-transform: uppercase; letter-spacing: .1em; }
 .tag-list { display: flex; flex-wrap: wrap; gap: 7px; }
 
-.skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.skill-card { position: relative; min-height: 245px; padding: 26px; border: 1px solid rgba(80,167,255,.16); border-radius: var(--radius); background: linear-gradient(150deg, rgba(9,26,42,.78), rgba(4,16,29,.72)); overflow: hidden; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
-.skill-card:hover { transform: translateY(-5px); border-color: rgba(80,167,255,.38); box-shadow: 0 18px 50px rgba(0,0,0,.22); }
-.skill-image { display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 24px; border: 1px solid var(--border); border-radius: 12px; background: rgba(255,255,255,.94); object-fit: contain; }
-.skill-image-cover { object-fit: cover; }
-.skill-image-text { color: var(--accent-light); background: rgba(22,133,255,.075); font-size: 1.8rem; font-weight: 850; }
-.card-number { position: absolute; top: 28px; right: 28px; margin: 0; color: #506275; font-size: .75rem; font-weight: 800; letter-spacing: .13em; }
-.skill-card h3 { margin: 0 0 18px; font-size: 1.2rem; }
-.skill-card ul { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 0; padding: 0; list-style: none; }
-.skill-card li { color: #aebdcb; font-size: .91rem; }
-.skill-card li:not(:last-child)::after { content: "/"; margin-left: 10px; color: #36536f; }
+.skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(178px, 1fr); gap: 18px; }
+.skill-card { display: flex; flex-direction: column; min-width: 0; min-height: 178px; padding: 22px; border: 1px solid rgba(80,167,255,.16); border-radius: var(--radius); background: linear-gradient(150deg, rgba(9,26,42,.78), rgba(4,16,29,.72)); overflow: hidden; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.skill-card:hover { transform: translateY(-4px); border-color: rgba(80,167,255,.38); box-shadow: 0 18px 50px rgba(0,0,0,.22); }
+.skill-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.skill-title { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.skill-icon { display: grid; flex: 0 0 38px; place-items: center; width: 38px; height: 38px; padding: 4px; border: 1px solid var(--border); border-radius: 9px; background: rgba(255,255,255,.94); object-fit: contain; }
+.skill-icon-text { color: var(--accent-light); background: rgba(22,133,255,.075); font-size: 1.35rem; font-weight: 850; }
+.skill-card h3 { min-width: 0; margin: 0; font-size: 1.08rem; line-height: 1.3; }
+.skill-percentage { flex: 0 0 auto; color: var(--accent-light); font-size: 1rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+.skill-description { display: -webkit-box; min-height: 2.8em; margin: 13px 0 18px; overflow: hidden; color: var(--text-secondary); font-size: .86rem; line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.skill-progress { height: 8px; flex: 0 0 8px; margin-top: auto; overflow: hidden; border-radius: 999px; background: #132536; }
+.skill-progress-fill { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #55d6ff); box-shadow: 0 0 10px rgba(80,167,255,.3); }
+.skill-card:hover .skill-progress-fill { filter: brightness(1.22) drop-shadow(0 0 5px rgba(80,167,255,.5)); }
 
 .timeline { position: relative; display: grid; gap: 28px; }
 .timeline::before { content: ""; position: absolute; left: 196px; top: 18px; bottom: 18px; width: 1px; background: linear-gradient(var(--accent), rgba(22,133,255,.09)); }
@@ -351,12 +353,12 @@ img { display: block; max-width: 100%; }
   .nav-panel { gap: 12px; }
   .nav-links { gap: 16px; }
   .nav-link { font-size: .72rem; }
-  .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .burner-visual { padding-inline: 18px; }
   .process-node { width: 88px; }
 }
 
 @media (max-width: 900px) {
+  .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .site-header { inset: 0 0 auto; height: 54px; }
   .nav-shell { padding-inline: 10px; }
   .hero-motto { display: none; }
@@ -414,7 +416,6 @@ img { display: block; max-width: 100%; }
   .education-mark { width: 72px; }
   .education-focus { grid-column: auto; }
   .skills-grid { grid-template-columns: 1fr; }
-  .skill-card { min-height: 0; }
   .timeline-item { padding-left: 31px; }
   .experience-card { grid-template-columns: 1fr; padding: 22px; }
   .project-body { padding: 23px; }
@@ -441,13 +442,13 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 640px) {
   .page-background { display: none; }
-  .tower-decoration { inset: 0 auto auto 0; display: block; width: 100%; height: 100svh; }
+  .tower-decoration { inset: 0 auto 0 0; display: block; width: 100%; }
   .tower-decoration::before {
-    background-image: conic-gradient(from 202deg at 50% 74%, transparent 0deg 13deg, rgba(255, 194, 131, .08) 14deg 16deg, transparent 17deg 37deg, rgba(255, 194, 131, .07) 38deg 40deg, transparent 41deg 63deg, rgba(255, 194, 131, .08) 64deg 66deg, transparent 67deg 91deg, rgba(255, 194, 131, .06) 92deg 94deg, transparent 95deg 120deg, rgba(255, 194, 131, .07) 121deg 123deg, transparent 124deg 153deg, rgba(255, 194, 131, .06) 154deg 156deg, transparent 157deg 360deg), radial-gradient(ellipse at 50% 74%, rgba(255, 177, 104, .22), transparent 48%), linear-gradient(rgba(2, 11, 22, .48), rgba(2, 11, 22, .58)), url("assets/images/transmission-towers.png");
-    background-position: center, center, center, 7% center;
-    background-size: cover, cover, cover, auto 100svh;
+    background-image: linear-gradient(rgba(2, 11, 22, .48), rgba(2, 11, 22, .58)), url("assets/images/transmission-towers.png");
+    background-position: center, 7% center;
+    background-size: cover, auto 100svh;
     background-repeat: no-repeat;
-    opacity: .58;
+    opacity: .62;
     -webkit-mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent);
     mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent);
   }
