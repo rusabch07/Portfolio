@@ -239,25 +239,159 @@ document.querySelectorAll(".copy-contact").forEach((button) => {
 
 const contactForm = document.querySelector("#contact-form");
 const formStatus = document.querySelector("#form-status");
+const contactSubmitButton = contactForm.querySelector('button[type="submit"]');
+const submitLabel = contactSubmitButton.querySelector(".submit-label");
+const contactEmailAddress = "m.rusabch07@gmail.com";
+let contactIsSubmitting = false;
+let contactCooldownUntil = 0;
 
-contactForm.addEventListener("submit", (event) => {
+const contactFields = [
+  {
+    input: contactForm.elements.name,
+    error: document.querySelector("#contact-name-error"),
+    validate: (value) => ({
+      valid: Boolean(value),
+      message: value ? "" : "Please enter your name.",
+      suggestion: ""
+    })
+  },
+  {
+    input: contactForm.elements.email,
+    error: document.querySelector("#contact-email-error"),
+    validate: validateEmail
+  },
+  {
+    input: contactForm.elements.message,
+    error: document.querySelector("#contact-message-error"),
+    validate: (value) => ({
+      valid: value.length >= 10,
+      message: value.length >= 10 ? "" : "Please enter a message of at least 10 characters.",
+      suggestion: ""
+    })
+  }
+];
+
+function setContactFieldError(field, validation) {
+  field.error.replaceChildren();
+  if (validation.suggestion) {
+    field.error.append(document.createTextNode("Did you mean "));
+    const suggestionLink = document.createElement("a");
+    suggestionLink.href = "#contact-email";
+    suggestionLink.textContent = validation.suggestion;
+    suggestionLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      field.input.value = validation.suggestion;
+      setContactFieldError(field, validateEmail(field.input.value));
+      field.input.focus();
+    });
+    field.error.append(suggestionLink, document.createTextNode("?"));
+  } else {
+    field.error.textContent = validation.message;
+  }
+  field.input.setAttribute("aria-invalid", String(!validation.valid));
+}
+
+function showContactFailure() {
+  formStatus.className = "form-status";
+  formStatus.replaceChildren(
+    document.createTextNode("Something went wrong. Please try again or email me directly at "),
+    Object.assign(document.createElement("a"), {
+      href: `mailto:${contactEmailAddress}`,
+      textContent: contactEmailAddress
+    }),
+    document.createTextNode(".")
+  );
+}
+
+contactFields.forEach((field) => {
+  field.input.addEventListener("input", () => {
+    if (field.error.textContent) {
+      setContactFieldError(field, field.validate(field.input.value.trim()));
+    }
+  });
+});
+
+const emailField = contactFields.find((field) => field.input.name === "email");
+
+emailField.input.addEventListener("blur", () => {
+  const trimmedEmail = emailField.input.value.trim();
+  const atIndex = trimmedEmail.lastIndexOf("@");
+  emailField.input.value = atIndex < 0
+    ? trimmedEmail
+    : `${trimmedEmail.slice(0, atIndex)}@${trimmedEmail.slice(atIndex + 1).toLowerCase()}`;
+  setContactFieldError(emailField, validateEmail(emailField.input.value));
+});
+
+contactForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  if (!contactForm.reportValidity()) return;
+  if (contactForm.elements.botcheck.checked || contactIsSubmitting || Date.now() < contactCooldownUntil) return;
 
-  const recipient = contactForm.dataset.recipient.trim();
-  if (!recipient) {
-    formStatus.textContent = "Add your email address to data-recipient in index.html to activate this form.";
+  const values = {};
+  let formIsValid = true;
+  let firstInvalidField = null;
+  contactFields.forEach((field) => {
+    let value = field.input.value.trim();
+    if (field === emailField) {
+      const atIndex = value.lastIndexOf("@");
+      value = atIndex < 0
+        ? value
+        : `${value.slice(0, atIndex)}@${value.slice(atIndex + 1).toLowerCase()}`;
+      field.input.value = value;
+    }
+    values[field.input.name] = value;
+    const validation = field.validate(value);
+    setContactFieldError(field, validation);
+    if (!validation.valid) {
+      formIsValid = false;
+      if (!firstInvalidField) firstInvalidField = field.input;
+    }
+  });
+  if (!formIsValid) {
+    firstInvalidField.focus();
     return;
   }
 
-  const formData = new FormData(contactForm);
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const message = formData.get("message");
-  const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-  const body = encodeURIComponent(`${message}\n\nFrom: ${name}\nEmail: ${email}`);
-  window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
-  formStatus.textContent = "Opening your email app…";
+  contactIsSubmitting = true;
+  contactSubmitButton.disabled = true;
+  contactForm.classList.add("is-sending");
+  submitLabel.textContent = "Sending...";
+  formStatus.className = "form-status";
+  formStatus.textContent = "Sending your message...";
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        access_key: contactForm.dataset.accessKey,
+        ...values,
+        subject: "New message from portfolio website",
+        from_name: "Portfolio Contact Form",
+        botcheck: ""
+      })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || "The contact form submission failed.");
+    }
+
+    contactForm.reset();
+    contactFields.forEach((field) => setContactFieldError(field, ""));
+    formStatus.className = "form-status is-success";
+    formStatus.textContent = "Thanks! Your message has been sent. I'll reply soon.";
+    contactCooldownUntil = Date.now() + 10000;
+    window.setTimeout(() => {
+      contactCooldownUntil = 0;
+      contactSubmitButton.disabled = false;
+    }, 10000);
+  } catch {
+    showContactFailure();
+  } finally {
+    contactIsSubmitting = false;
+    contactForm.classList.remove("is-sending");
+    submitLabel.textContent = "Send Message";
+    if (Date.now() >= contactCooldownUntil) contactSubmitButton.disabled = false;
+  }
 });
 
 document.querySelector("#current-year").textContent = String(new Date().getFullYear());

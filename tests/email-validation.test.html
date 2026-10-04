@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Email validation tests</title>
+  <style>
+    body { max-width: 900px; margin: 32px auto; padding: 0 18px; color: #e8eef5; background: #020b16; font: 16px/1.5 "Segoe UI", sans-serif; }
+    h1 { font-size: 1.5rem; }
+    #summary { padding: 12px 16px; border-radius: 8px; background: #102235; font-weight: 700; }
+    #results { display: grid; gap: 6px; padding: 0; list-style: none; }
+    #results li { padding: 9px 12px; border: 1px solid #263c50; border-radius: 6px; overflow-wrap: anywhere; }
+    .pass { color: #72e6a5; }
+    .fail { color: #ffabab; }
+  </style>
+</head>
+<body>
+  <h1>Email validation tests</h1>
+  <p id="summary" aria-live="polite">Running tests…</p>
+  <ol id="results"></ol>
+
+  <script src="../email-validation.js"></script>
+  <script>
+    "use strict";
+
+    const longEmail = `${"a".repeat(64)}@${"b".repeat(63)}.${"c".repeat(63)}.${"d".repeat(58)}.com`;
+    const testCases = [
+      { label: "VALID: rusab@gmail.com", email: "rusab@gmail.com", valid: true },
+      { label: "VALID: rusab.ch@gmail.com", email: "rusab.ch@gmail.com", valid: true },
+      { label: "VALID: USER@GMAIL.COM", email: "USER@GMAIL.COM", valid: true },
+      { label: "INVALID: first.last+tag@uet.edu.pk (Gmail only)", email: "first.last+tag@uet.edu.pk", valid: false, message: "Only @gmail.com email addresses are accepted." },
+      { label: "INVALID: a_b-c@sub.domain.co.uk (Gmail only)", email: "a_b-c@sub.domain.co.uk", valid: false, message: "Only @gmail.com email addresses are accepted." },
+      { label: "INVALID: USER@Example.COM (Gmail only)", email: "USER@Example.COM", valid: false, message: "Only @gmail.com email addresses are accepted." },
+      { label: 'INVALID: ""', email: "", valid: false },
+      { label: "INVALID: abc", email: "abc", valid: false },
+      { label: "INVALID: abc@", email: "abc@", valid: false },
+      { label: "INVALID: @gmail.com", email: "@gmail.com", valid: false },
+      { label: "INVALID: abc@gmail", email: "abc@gmail", valid: false },
+      { label: "INVALID: abc@gmail..com", email: "abc@gmail..com", valid: false },
+      { label: "INVALID: abc@.com", email: "abc@.com", valid: false },
+      { label: "INVALID: abc@gmail.c", email: "abc@gmail.c", valid: false },
+      { label: 'INVALID: "abc @gmail.com"', email: "abc @gmail.com", valid: false },
+      { label: "INVALID: abc@@gmail.com", email: "abc@@gmail.com", valid: false },
+      { label: "INVALID: .abc@gmail.com", email: ".abc@gmail.com", valid: false },
+      { label: "INVALID: abc.@gmail.com", email: "abc.@gmail.com", valid: false },
+      { label: "INVALID: abc..def@gmail.com", email: "abc..def@gmail.com", valid: false },
+      { label: "INVALID: abc@-gmail.com", email: "abc@-gmail.com", valid: false },
+      { label: "INVALID: 255-character email", email: longEmail, valid: false },
+      { label: "DISPOSABLE: test@mailinator.com", email: "test@mailinator.com", valid: false, message: "Please use a permanent email address." },
+      { label: "DISPOSABLE: test@yopmail.com", email: "test@yopmail.com", valid: false, message: "Please use a permanent email address." },
+      { label: "SUGGESTION: test@gmial.com → gmail.com", email: "test@gmial.com", valid: false, suggestion: "test@gmail.com" },
+      { label: "SUGGESTION: test@hotmial.com → hotmail.com (still rejected)", email: "test@hotmial.com", valid: false, suggestion: "test@hotmail.com" }
+    ];
+
+    let passed = 0;
+    const results = document.querySelector("#results");
+
+    testCases.forEach((testCase) => {
+      const result = validateEmail(testCase.email);
+      const success = result.valid === testCase.valid &&
+        (!testCase.message || result.message === testCase.message) &&
+        (!testCase.suggestion || result.suggestion === testCase.suggestion) &&
+        (!testCase.valid || !result.suggestion);
+      if (success) passed += 1;
+
+      const item = document.createElement("li");
+      item.className = success ? "pass" : "fail";
+      item.textContent = `${success ? "PASS" : "FAIL"} — ${testCase.label}` +
+        (success ? "" : ` (got valid=${result.valid}, message="${result.message}", suggestion="${result.suggestion}")`);
+      results.append(item);
+    });
+
+    document.querySelector("#summary").textContent =
+      `${passed}/${testCases.length} tests passed; ${testCases.length - passed} failed.`;
+  </script>
+</body>
+</html>
