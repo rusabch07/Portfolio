@@ -208,7 +208,11 @@ img { display: block; max-width: 100%; }
 .experience-card h3 { margin: 0; font-size: 1.3rem; }
 .company-name { margin: 2px 0 13px; color: #d3dee8; font-weight: 650; }
 .experience-card p:last-child { margin: 0; color: var(--text-secondary); }
-
+.education-timeline .timeline-date span { text-transform: none; }
+.education-logo { padding: 3px; background: #fff; object-fit: contain; }
+.education-initials { font-size: .7rem; }
+.education-institute { margin: 3px 0 8px; color: #d3dee8; font-weight: 650; }
+.education-grade { margin: 0; color: var(--accent-light); font-size: .85rem; font-weight: 750; }
 .projects-section { overflow: hidden; }
 .projects-section::before { content: ""; position: absolute; width: 520px; height: 520px; left: -350px; top: 25%; border: 1px solid rgba(22,133,255,.12); border-radius: 50%; box-shadow: 0 0 0 70px rgba(22,133,255,.018), 0 0 0 140px rgba(22,133,255,.014); pointer-events: none; }
 .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
@@ -369,8 +373,6 @@ img { display: block; max-width: 100%; }
   .section-heading { align-items: start; flex-direction: column; gap: 16px; }
   .about-grid { grid-template-columns: 1fr; }
   .systems-card { width: min(100%, 680px); }
-  .education-card { grid-template-columns: auto 1fr; }
-  .education-focus { grid-column: 1 / -1; padding: 25px 0 0; border-left: 0; border-top: 1px solid rgba(80,167,255,.17); }
   .timeline::before { left: 10px; }
   .timeline-item { grid-template-columns: 1fr; gap: 10px; padding-left: 42px; }
   .timeline-marker { left: 3px; top: 8px; }
