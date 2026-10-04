@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>Rusab Chaudhary logo</title>
+  <defs>
+    <linearGradient id="swoosh" x1="12" y1="56" x2="42" y2="13" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2f6bff"/>
+      <stop offset="1" stop-color="#4cc3ff"/>
+    </linearGradient>
+    <linearGradient id="leg" x1="36" y1="35" x2="54" y2="57" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4cc3ff"/>
+      <stop offset="1" stop-color="#d9f4ff"/>
+    </linearGradient>
+  </defs>
+  <path fill="#f5f8ff" fill-rule="evenodd" d="M16 8h19c11 0 17 6 17 15.5 0 8-4.7 13.1-13.2 15.1L56 57H44L29.3 39H25l-6 18H9l7-21V8Zm9 8v15h10c5.4 0 8-2.4 8-7.4S40.4 16 35 16H25Z" clip-rule="evenodd"/>
+  <path stroke="url(#leg)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6" d="m35.8 36.2 15.5 19.3"/>
+  <path stroke="url(#swoosh)" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.8" d="M13.5 56 25.8 33.5 34.7 15"/>
+</svg>
