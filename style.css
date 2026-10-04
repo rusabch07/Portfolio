@@ -127,7 +127,7 @@ img { display: block; max-width: 100%; }
 .hero-eyebrow::before { content: ""; width: 38px; height: 1px; background: var(--accent-light); box-shadow: 0 0 10px var(--accent); }
 .hero h1 { margin: 0; font-size: clamp(2.75rem, 5.5vw, 5rem); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
 .typed-line { display: block; min-height: 1.12em; color: #fff; font-size: .88em; text-shadow: 0 4px 30px rgba(0, 0, 0, .42); }
-.typed-prefix-line, .typed-name-line { display: block; }
+.typed-prefix-line, .typed-name-line { display: block; min-height: 1.12em; }
 .typed-name-line { white-space: nowrap; }
 #typed-name { color: var(--accent-light); }
 .hero-eyebrow { margin: 0 0 20px; }
