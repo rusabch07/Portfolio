@@ -125,7 +125,7 @@ img { display: block; max-width: 100%; }
 .eyebrow { margin: 0 0 20px; color: var(--accent-light); font-size: .82rem; font-weight: 800; letter-spacing: .19em; text-transform: uppercase; }
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 12px; }
 .hero-eyebrow::before { content: ""; width: 38px; height: 1px; background: var(--accent-light); box-shadow: 0 0 10px var(--accent); }
-.hero h1 { margin: 0; font-size: clamp(2.75rem, 5.5vw, 5rem); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
+.hero h1 { margin: 0; font-size: clamp(2.65rem, 5vw, 4.6rem); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
 .typed-line { display: block; min-height: 1.12em; color: #fff; font-size: .88em; text-shadow: 0 4px 30px rgba(0, 0, 0, .42); }
 .typed-prefix-line, .typed-name-line { display: block; min-height: 1.12em; }
 .typed-name-line { white-space: nowrap; }
@@ -143,9 +143,9 @@ img { display: block; max-width: 100%; }
 .scroll-cue { position: absolute; z-index: 2; right: clamp(24px, 4vw, 64px); bottom: 44px; display: flex; align-items: center; gap: 13px; color: #c7d3df; font-size: .73rem; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; writing-mode: vertical-rl; }
 .scroll-line { display: block; width: 1px; height: 48px; background: linear-gradient(var(--accent-light), transparent); }
 .tower-decoration { position: absolute; z-index: 0; inset: 0 auto 0 0; width: min(30vw, 440px); pointer-events: none; }
-.tower-decoration::before { content: ""; position: sticky; top: 0; display: block; height: 100vh; background: linear-gradient(rgba(2, 11, 22, .52), rgba(2, 11, 22, .62)), url("assets/images/transmission-towers.png") left bottom / cover no-repeat; opacity: .48; -webkit-mask-image: linear-gradient(to right, #000 0%, rgba(0, 0, 0, .82) 56%, transparent 100%); mask-image: linear-gradient(to right, #000 0%, rgba(0, 0, 0, .82) 56%, transparent 100%); }
-.section { position: relative; z-index: 1; padding-block: clamp(92px, 10vw, 148px); border-top: 1px solid rgba(80, 167, 255, .075); background: transparent; }
-.section-alt { background: linear-gradient(180deg, rgba(2, 11, 22, .12), rgba(6, 19, 33, .24), rgba(2, 11, 22, .12)); }
+.tower-decoration::before { content: ""; position: sticky; top: 0; display: block; height: 100vh; background: linear-gradient(rgba(2, 11, 22, .52), rgba(2, 11, 22, .62)), url("assets/images/transmission-towers.png") left bottom / cover no-repeat; opacity: .36; -webkit-mask-image: linear-gradient(to right, #000 0%, rgba(0, 0, 0, .82) 56%, transparent 100%); mask-image: linear-gradient(to right, #000 0%, rgba(0, 0, 0, .82) 56%, transparent 100%); }
+.section { position: relative; z-index: 1; padding-block: clamp(96px, 10vw, 144px); border-top: 1px solid rgba(80, 167, 255, .075); background: transparent; }
+.section-alt { background: linear-gradient(180deg, rgba(2, 11, 22, .18), rgba(6, 19, 33, .32), rgba(2, 11, 22, .18)); }
 .section-copy h2, .section-heading h2, .contact-intro h2 { margin: 0 0 24px; font-size: clamp(2.35rem, 4.2vw, 4rem); line-height: 1.05; letter-spacing: -.045em; }
 .section-kicker { margin: 0 0 14px; color: var(--accent-light); font-size: .77rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
 .section-copy p, .section-heading > p, .contact-intro > p { color: var(--text-secondary); }
@@ -219,7 +219,7 @@ img { display: block; max-width: 100%; }
 .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .project-card { display: flex; flex-direction: column; min-width: 0; border: 1px solid rgba(80,167,255,.16); border-radius: 18px; background: linear-gradient(145deg, rgba(8,25,41,.82), rgba(4,16,28,.74)); overflow: hidden; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
 .project-card:hover { transform: translateY(-5px); border-color: rgba(80,167,255,.38); box-shadow: 0 24px 65px rgba(0,0,0,.24); }
-.project-visual { position: relative; min-height: 245px; overflow: hidden; border-bottom: 1px solid rgba(80,167,255,.14); background: #051321; }
+.project-visual { position: relative; aspect-ratio: 16 / 9; min-height: 0; overflow: hidden; border-bottom: 1px solid rgba(80,167,255,.14); background: #051321; }
 .project-visual::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(80,167,255,.038) 1px, transparent 1px), linear-gradient(90deg, rgba(80,167,255,.038) 1px, transparent 1px); background-size: 34px 34px; pointer-events: none; }
 .project-visual svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .visual-topline { position: absolute; z-index: 2; display: flex; gap: 6px; top: 20px; left: 25px; }
@@ -399,6 +399,8 @@ img { display: block; max-width: 100%; }
   .page-background { object-position: 59% center; }
   body::before { background: rgba(2, 11, 22, .77); }
   .hero-content { padding-block: calc(var(--header-height) + 58px) 100px; }
+  .hero h1 { min-height: 2.2em; font-size: clamp(2rem, 8vw, 2.4rem); line-height: 1; }
+  .typed-prefix-line { white-space: nowrap; }
   .hero-specialties { line-height: 1.75; }
   .hero-specialties span { margin-inline: .14em; }
   .hero-actions { width: 100%; }
@@ -415,7 +417,6 @@ img { display: block; max-width: 100%; }
   .skill-card { min-height: 0; }
   .timeline-item { padding-left: 31px; }
   .experience-card { grid-template-columns: 1fr; padding: 22px; }
-  .project-visual { min-height: 210px; }
   .project-body { padding: 23px; }
   .burner-visual { gap: 5px; }
   .burner-visual i { width: 12px; }
@@ -434,8 +435,22 @@ img { display: block; max-width: 100%; }
   .project-dialog { max-height: 90svh; padding: 24px; }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .tower-decoration { display: none; }
+}
+
+@media (max-width: 640px) {
+  .page-background { display: none; }
+  .tower-decoration { inset: 0 auto auto 0; display: block; width: 100%; height: 100svh; }
+  .tower-decoration::before {
+    background-image: conic-gradient(from 202deg at 50% 74%, transparent 0deg 13deg, rgba(255, 194, 131, .08) 14deg 16deg, transparent 17deg 37deg, rgba(255, 194, 131, .07) 38deg 40deg, transparent 41deg 63deg, rgba(255, 194, 131, .08) 64deg 66deg, transparent 67deg 91deg, rgba(255, 194, 131, .06) 92deg 94deg, transparent 95deg 120deg, rgba(255, 194, 131, .07) 121deg 123deg, transparent 124deg 153deg, rgba(255, 194, 131, .06) 154deg 156deg, transparent 157deg 360deg), radial-gradient(ellipse at 50% 74%, rgba(255, 177, 104, .22), transparent 48%), linear-gradient(rgba(2, 11, 22, .48), rgba(2, 11, 22, .58)), url("assets/images/transmission-towers.png");
+    background-position: center, center, center, 7% center;
+    background-size: cover, cover, cover, auto 100svh;
+    background-repeat: no-repeat;
+    opacity: .58;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
